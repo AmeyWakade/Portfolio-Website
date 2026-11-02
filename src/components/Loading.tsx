@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
 
@@ -9,29 +9,57 @@ const Loading = ({ percent }: { percent: number }) => {
   const [loaded, setLoaded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
-
-  if (percent >= 100) {
-    setTimeout(() => {
-      setLoaded(true);
-      setTimeout(() => {
-        setIsLoaded(true);
-      }, 1000);
-    }, 600);
-  }
+  const hasTriggered = useRef(false);
 
   useEffect(() => {
-    import("./utils/initialFX").then((module) => {
-      if (isLoaded) {
-        setClicked(true);
+    // Safety fallback: if 3D model or scripts take > 3.5s, guarantee loading dismisses
+    const safetyTimer = setTimeout(() => {
+      setLoaded(true);
+      setIsLoaded(true);
+    }, 3500);
+
+    return () => clearTimeout(safetyTimer);
+  }, []);
+
+  useEffect(() => {
+    if (percent >= 100 && !hasTriggered.current) {
+      hasTriggered.current = true;
+      const t1 = setTimeout(() => {
+        setLoaded(true);
+        const t2 = setTimeout(() => {
+          setIsLoaded(true);
+        }, 800);
+        return () => clearTimeout(t2);
+      }, 400);
+      return () => clearTimeout(t1);
+    }
+  }, [percent]);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    setClicked(true);
+
+    import("./utils/initialFX")
+      .then((module) => {
         setTimeout(() => {
-          if (module.initialFX) {
-            module.initialFX();
+          try {
+            if (module.initialFX) {
+              module.initialFX();
+            }
+          } catch (e) {
+            console.warn("initialFX animation skipped:", e);
+          } finally {
+            setIsLoading(false);
+            document.body.style.overflowY = "auto";
           }
-          setIsLoading(false);
-        }, 900);
-      }
-    });
-  }, [isLoaded]);
+        }, 800);
+      })
+      .catch((err) => {
+        console.warn("Could not load initialFX:", err);
+        setIsLoading(false);
+        document.body.style.overflowY = "auto";
+      });
+  }, [isLoaded, setIsLoading]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     const { currentTarget: target } = e;
@@ -77,7 +105,7 @@ const Loading = ({ percent }: { percent: number }) => {
             <div className="loading-container">
               <div className="loading-content">
                 <div className="loading-content-in">
-                  Loading <span>{percent}%</span>
+                  Loading <span>{Math.min(100, Math.round(percent))}%</span>
                 </div>
               </div>
               <div className="loading-box"></div>
@@ -110,7 +138,7 @@ export const setProgress = (setLoading: (value: number) => void) => {
         if (percent > 91) {
           clearInterval(interval);
         }
-      }, 2000);
+      }, 1000);
     }
   }, 100);
 

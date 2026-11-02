@@ -11,16 +11,19 @@ import {
   RapierRigidBody,
 } from "@react-three/rapier";
 
+const bUrl = import.meta.env.BASE_URL || "/";
+const prefix = bUrl.endsWith("/") ? bUrl : `${bUrl}/`;
+
 const textureLoader = new THREE.TextureLoader();
 const imageUrls = [
-  "/images/react2.webp",
-  "/images/next2.webp",
-  "/images/node2.webp",
-  "/images/express.webp",
-  "/images/mongo.webp",
-  "/images/mysql.webp",
-  "/images/typescript.webp",
-  "/images/javascript.webp",
+  `${prefix}images/react2.webp`,
+  `${prefix}images/next2.webp`,
+  `${prefix}images/node2.webp`,
+  `${prefix}images/express.webp`,
+  `${prefix}images/mongo.webp`,
+  `${prefix}images/mysql.webp`,
+  `${prefix}images/typescript.webp`,
+  `${prefix}images/javascript.webp`,
 ];
 const textures = imageUrls.map((url) => textureLoader.load(url));
 
@@ -130,9 +133,9 @@ const TechStack = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
-      const threshold = document
-        .getElementById("work")!
-        .getBoundingClientRect().top;
+      const targetElem = document.getElementById("work");
+      if (!targetElem) return;
+      const threshold = targetElem.getBoundingClientRect().top;
       setIsActive(scrollY > threshold);
     };
     document.querySelectorAll(".header a").forEach((elem) => {
@@ -199,7 +202,7 @@ const TechStack = () => {
           ))}
         </Physics>
         <Environment
-          files="/models/char_enviorment.hdr"
+          files={`${prefix}models/char_enviorment.hdr`}
           environmentIntensity={0.5}
           environmentRotation={[0, 4, 2]}
         />

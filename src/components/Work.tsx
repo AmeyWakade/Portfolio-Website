@@ -15,13 +15,16 @@ interface Project {
   link: string;
 }
 
+const bUrl = import.meta.env.BASE_URL || "/";
+const prefix = bUrl.endsWith("/") ? bUrl : `${bUrl}/`;
+
 const projects: Project[] = [
   {
     num: "01",
     name: "SkillProof",
     category: "Full-Stack EdTech & Coding Arena",
     tools: "Java 21, Spring Boot, Spring Security, PostgreSQL, React, Vite, Docker, JDoodle API",
-    image: "/images/react.webp",
+    image: `${prefix}images/react.webp`,
     link: "https://skillproof.co.in/",
   },
   {
@@ -29,7 +32,7 @@ const projects: Project[] = [
     name: "AI University Management",
     category: "Full-Stack & Machine Learning",
     tools: "React.js, Node.js, FastAPI, MongoDB, XGBoost (ML - 90% Accuracy), REST APIs",
-    image: "/images/next.webp",
+    image: `${prefix}images/next.webp`,
     link: "https://github.com/AmeyWakade",
   },
   {
@@ -37,7 +40,7 @@ const projects: Project[] = [
     name: "Wheelsafar Platform",
     category: "Responsive UI & Booking Flow",
     tools: "React.js, Tailwind CSS, REST APIs, Real-time Booking, Component Optimization",
-    image: "/images/node.webp",
+    image: `${prefix}images/node.webp`,
     link: "https://github.com/AmeyWakade",
   },
   {
@@ -45,7 +48,7 @@ const projects: Project[] = [
     name: "Sports First Operations",
     category: "Platform Integration & Operations",
     tools: "Java, Real-Time Query Handling, Booking Operations, Scalable Workflows",
-    image: "/images/mysql.webp",
+    image: `${prefix}images/mysql.webp`,
     link: "https://github.com/AmeyWakade",
   },
   {
@@ -53,7 +56,7 @@ const projects: Project[] = [
     name: "Antidote Entertainments",
     category: "Digital Business & Operations",
     tools: "Business Operations, Client Engagement, Vendor Logistics, Leadership",
-    image: "/images/mongo.webp",
+    image: `${prefix}images/mongo.webp`,
     link: "https://github.com/AmeyWakade",
   },
   {
@@ -61,7 +64,7 @@ const projects: Project[] = [
     name: "Real-Time Microservices",
     category: "Event-Driven Architecture",
     tools: "Node.js, Express, Socket.io, RabbitMQ, REST APIs, Microservices Architecture",
-    image: "/images/express.webp",
+    image: `${prefix}images/express.webp`,
     link: "https://github.com/AmeyWakade",
   },
 ];
@@ -73,13 +76,13 @@ const Work = () => {
     function setTranslateX() {
       const box = document.getElementsByClassName("work-box");
       if (!box || box.length === 0) return;
-      const rectLeft = document
-        .querySelector(".work-container")!
-        .getBoundingClientRect().left;
+      const container = document.querySelector(".work-container");
+      if (!container) return;
+      const rectLeft = container.getBoundingClientRect().left;
       const rect = box[0].getBoundingClientRect();
-      const parentWidth = box[0].parentElement!.getBoundingClientRect().width;
+      const parentWidth = box[0].parentElement ? box[0].parentElement.getBoundingClientRect().width : 0;
       let padding: number =
-        parseInt(window.getComputedStyle(box[0]).padding) / 2;
+        parseInt(window.getComputedStyle(box[0]).padding) / 2 || 0;
       translateX = rect.width * box.length - (rectLeft + parentWidth) + padding;
     }
 

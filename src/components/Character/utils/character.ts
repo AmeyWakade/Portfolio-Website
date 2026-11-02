@@ -10,14 +10,18 @@ const setCharacter = (
 ) => {
   const loader = new GLTFLoader();
   const dracoLoader = new DRACOLoader();
-  dracoLoader.setDecoderPath("/draco/");
+  const baseUrl = import.meta.env.BASE_URL || "/";
+  const dracoPath = baseUrl.endsWith("/") ? `${baseUrl}draco/` : `${baseUrl}/draco/`;
+  const modelPath = baseUrl.endsWith("/") ? `${baseUrl}models/character.enc` : `${baseUrl}/models/character.enc`;
+
+  dracoLoader.setDecoderPath(dracoPath);
   loader.setDRACOLoader(dracoLoader);
 
   const loadCharacter = () => {
     return new Promise<GLTF | null>(async (resolve, reject) => {
       try {
         const encryptedBlob = await decryptFile(
-          "/models/character.enc",
+          modelPath,
           "Character3D#@"
         );
         const blobUrl = URL.createObjectURL(new Blob([encryptedBlob]));
@@ -39,8 +43,10 @@ const setCharacter = (
             resolve(gltf);
             setCharTimeline(character, camera);
             setAllTimeline();
-            character!.getObjectByName("footR")!.position.y = 3.36;
-            character!.getObjectByName("footL")!.position.y = 3.36;
+            try {
+              character!.getObjectByName("footR")!.position.y = 3.36;
+              character!.getObjectByName("footL")!.position.y = 3.36;
+            } catch (_) {}
             dracoLoader.dispose();
           },
           undefined,
