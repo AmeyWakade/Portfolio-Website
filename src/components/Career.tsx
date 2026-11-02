@@ -15,43 +15,55 @@ const Career = () => {
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
+                <h4>Frontend Developer Intern</h4>
+                <h5>Wheelsafar.com</h5>
               </div>
-              <h3>20XX</h3>
+              <h3>2026</h3>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
+              Developed and maintained responsive user interface components using React.js and
+              Tailwind CSS, improving cross-device compatibility. Optimized performance and
+              navigation flow, and integrated REST APIs for real-time booking and dynamic user data.
             </p>
           </div>
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
+                <h4>Operations & Integration</h4>
+                <h5>Sports First</h5>
               </div>
-              <h3>20XX</h3>
+              <h3>2025</h3>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
+              Assisted in on-ground platform integration, coordinating between end-users and
+              service providers. Managed real-time user queries and booking operations,
+              improving customer satisfaction and handling workflows at scale.
             </p>
           </div>
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
+                <h4>Founder & Manager</h4>
+                <h5>Antidote Entertainments</h5>
+              </div>
+              <h3>2024</h3>
+            </div>
+            <p>
+              Founded and managed an event management company; developed digital business operations,
+              client relations, vendor logistics, and led multidisciplinary teams for successful events.
+            </p>
+          </div>
+          <div className="career-info-box">
+            <div className="career-info-in">
+              <div className="career-role">
+                <h4>B.Tech in Computer Science</h4>
+                <h5>Vishwakarma University</h5>
               </div>
               <h3>NOW</h3>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
+              Undergraduate studies with focus on Data Structures & Algorithms, Object-Oriented
+              Programming, Operating Systems, Database Management Systems (DBMS), and Computer Networks.
             </p>
           </div>
         </div>
